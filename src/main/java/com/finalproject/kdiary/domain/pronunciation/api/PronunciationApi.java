@@ -1,5 +1,6 @@
 package com.finalproject.kdiary.domain.pronunciation.api;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +26,12 @@ import com.google.gson.Gson;
 @RestController
 @RequestMapping(value = "/pronunciation")
 public class PronunciationApi {
+
+    @Value("${api-key}")
+    private String accessKey;
     @GetMapping()
     public String hello() {
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/PronunciationKor";
-        String accessKey = "60c7675c-c96b-413a-a331-e323521d9387";    // 발급받은 API Key
         String languageCode = "korean";     // 언어 코드
         String script = "형제 중에서 맏이가 제일 힘든 것 같아요.";    // 평가 대본
         String audioContents = null;
