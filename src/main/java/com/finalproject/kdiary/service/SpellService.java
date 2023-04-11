@@ -9,8 +9,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -19,9 +23,10 @@ public class SpellService {
 
     private WebDriver driver;
     public static String WEB_DRIVER_ID = "webdriver.chrome.driver"; // Properties 설정
-    public static String WEB_DRIVER_PATH = "/Users/anchaelin/Desktop/2023-final-project/KOREAN-DIARY-SERVER/chromedriver"; // WebDriver 경로
 
-    private void chrome() {
+    private void chrome() throws IOException {
+        ClassPathResource resource = new ClassPathResource("chromedriver");
+        String WEB_DRIVER_PATH = Paths.get(resource.getURI()).toString();
         System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 
         ChromeOptions options = new ChromeOptions();
@@ -37,7 +42,7 @@ public class SpellService {
         driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
     }
 
-    public JSONObject getResult() throws ParseException {
+    public JSONObject getResult() throws ParseException, IOException {
         chrome();
 
         String url = "http://speller.cs.pusan.ac.kr/";

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping(value = "/spell")
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class SpellController {
     private final SpellService spellService;
 
     @GetMapping()
-    public JSONObject spellCheck() throws ParseException {
+    public JSONObject spellCheck() throws ParseException, IOException {
         JSONObject result = spellService.getResult();
 
         return result;
