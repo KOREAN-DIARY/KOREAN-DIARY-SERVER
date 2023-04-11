@@ -1,10 +1,9 @@
-package com.finalproject.kdiary.domain.pronunciation.api;
+package com.finalproject.kdiary.service;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -19,18 +18,12 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.gson.Gson;
-
-
-
-@RestController
-@RequestMapping(value = "/pronunciation")
-public class PronunciationApi {
-
+@Service
+public class PronunciationService {
     @Value("${api-key}")
     private String accessKey;
-    @GetMapping()
-    public String hello() {
+
+    public String test() {
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/PronunciationKor";
         String languageCode = "korean";     // 언어 코드
         String script = "형제 중에서 맏이가 제일 힘든 것 같아요.";    // 평가 대본
