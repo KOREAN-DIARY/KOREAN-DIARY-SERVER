@@ -43,7 +43,7 @@ public class WebDriverUtil {
         driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
     }
 
-    public void useDriver() throws ParseException {
+    public JSONObject useDriver() throws ParseException {
         String url = "http://speller.cs.pusan.ac.kr/";
         driver.get(url);
         driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);  // 페이지 불러오는 여유시간.
@@ -58,9 +58,10 @@ public class WebDriverUtil {
         Object obj = parser.parse(text.split("data = ")[1].split(";")[0]);
         JSONArray array = (JSONArray) obj;
         JSONObject json = (JSONObject) array.get(0);
-        System.out.println(json);
 
         quitDriver();
+
+        return json;
     }
 
     private void quitDriver() {

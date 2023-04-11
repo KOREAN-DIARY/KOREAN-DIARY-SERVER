@@ -1,7 +1,7 @@
 package com.finalproject.kdiary.domain.spell.api;
 
 
-import lombok.AllArgsConstructor;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class SpellApi {
 
     @GetMapping()
-    public String spellCheck() throws ParseException {
+    public JSONObject spellCheck() throws ParseException {
         WebDriverUtil example = new WebDriverUtil();
-        example.useDriver();
+        JSONObject result = example.useDriver();
 
-        return "hi";
+        return result;
     }
 }
