@@ -1,4 +1,4 @@
-package com.finalproject.kdiary.domain.home.api;
+package com.finalproject.kdiary.controller.home;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/")
-public class HomeApi {
+public class HomeController {
     @GetMapping("/")
-    public String hello(@RequestParam(value = "name", defaultValue = "World") String name){
-        return String.format("Hello %s!",name);
+    public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+        return String.format("Hello %s!", name);
     }
 }

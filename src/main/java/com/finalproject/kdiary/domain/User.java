@@ -1,4 +1,4 @@
-package com.finalproject.kdiary.domain.model;
+package com.finalproject.kdiary.domain;
 
 import lombok.NoArgsConstructor;
 
@@ -7,10 +7,13 @@ import java.util.UUID;
 
 @NoArgsConstructor
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User {
     @Id
-    private String id=UUID.randomUUID().toString();
+    private String id = UUID.randomUUID().toString();
     @Column(length = 50)
     private String name;
+
+    @Column(length = 50)
+    private String email;
 }
