@@ -1,4 +1,4 @@
-package com.finalproject.kdiary.domain.spell.api;
+package com.finalproject.kdiary.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
@@ -15,22 +15,16 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
-public class WebDriverUtil {
+public class SpellService {
 
     private WebDriver driver;
     public static String WEB_DRIVER_ID = "webdriver.chrome.driver"; // Properties 설정
     public static String WEB_DRIVER_PATH = "/Users/anchaelin/Desktop/2023-final-project/KOREAN-DIARY-SERVER/chromedriver"; // WebDriver 경로
 
-    public WebDriverUtil() {
-        chrome();
-    }
-
     private void chrome() {
         System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 
-        // webDriver 옵션 설정.
         ChromeOptions options = new ChromeOptions();
-//        options.setHeadless(true);
         options.addArguments("--lang=ko");
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--no-sandbox");
@@ -43,7 +37,9 @@ public class WebDriverUtil {
         driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
     }
 
-    public JSONObject useDriver() throws ParseException {
+    public JSONObject getResult() throws ParseException {
+        chrome();
+
         String url = "http://speller.cs.pusan.ac.kr/";
         driver.get(url);
         driver.manage().timeouts().implicitlyWait(500, TimeUnit.MILLISECONDS);  // 페이지 불러오는 여유시간.
