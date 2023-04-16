@@ -25,8 +25,17 @@ public class SpellService {
     public static String WEB_DRIVER_ID = "webdriver.chrome.driver"; // Properties 설정
 
     private void chrome() throws IOException {
-        ClassPathResource resource = new ClassPathResource("chromedriver");
-        String WEB_DRIVER_PATH = Paths.get(resource.getURI()).toString();
+        String os = System.getProperty("os.name").toLowerCase();
+        String WEB_DRIVER_PATH = "";
+
+        if (os.contains("win")) {
+            ClassPathResource resource  = new ClassPathResource("chromedriver.exe");
+            WEB_DRIVER_PATH = Paths.get(resource.getURI()).toString();
+        } else if (os.contains("mac")) {
+            ClassPathResource resource = new ClassPathResource("chromedriver");
+            WEB_DRIVER_PATH = Paths.get(resource.getURI()).toString();
+        }
+
         System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 
         ChromeOptions options = new ChromeOptions();
