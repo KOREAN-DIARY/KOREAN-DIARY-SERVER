@@ -21,7 +21,7 @@ import java.util.Map;
 @Service
 public class PronunciationService {
     @Value("${api-key}")
-    private String accessKey;
+    static private String accessKey;
 
     public String test() {
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/PronunciationKor";
