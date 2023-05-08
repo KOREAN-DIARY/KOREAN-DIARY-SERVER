@@ -19,11 +19,12 @@ public class DiaryService {
         Diary diary = Diary.builder()
                 .content(request.getContent())
                 .date(request.getDate())
-                .speakingScore(request.getSpeakingScore())
-                .writingScore(request.getWritingScore())
+                .speaking(request.getSpeaking())
+                .writing(request.getWriting())
                 .build();
 
-        return CreateResponseDto.of(diary.getId(), diary.getContent(), diary.getDate(), diary.getWritingScore(), diary.getSpeakingScore());
+        diaryRepository.save(diary);
+        return CreateResponseDto.of(diary.getId(), diary.getContent(), diary.getDate(), diary.getWriting(), diary.getSpeaking());
 
     }
 }

@@ -1,20 +1,22 @@
 package com.finalproject.kdiary.controller.diary.dto.response;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Date;
 
+@Data
 @Getter
 @RequiredArgsConstructor
 public class CreateResponseDto {
     private final Long id;
     private final String content;
     private final Date date;
-    private final int writingScore;
-    private final int speakingScore;
+    private final int writing;
+    private final int speaking;
 
-    public static CreateResponseDto of(Long id, String content, Date date, int writingScore, int speakingScore) {
-        return new CreateResponseDto(id, content, date, writingScore, speakingScore);
+    public static CreateResponseDto of(Long id, String content, Date date, int writing, int speaking) {
+        return new CreateResponseDto(id, content, date, writing, speaking);
     }
 }

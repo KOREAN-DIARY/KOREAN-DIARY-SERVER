@@ -26,17 +26,17 @@ public class Diary {
     private Date date;
 
     @Column(nullable = false)
-    private int writingScore;
+    private int writing;
 
     @Column(nullable = false)
-    private int speakingScore;
+    private int speaking;
 
 
     @Builder
-    public Diary(String content, Date date, int writingScore, int speakingScore) {
+    public Diary(String content, Date date, int writing, int speaking) {
         this.content = content;
         this.date = date;
-        this.writingScore = writingScore;
-        this.speakingScore = speakingScore;
+        this.writing = writing;
+        this.speaking = speaking;
     }
 }
