@@ -1,19 +1,31 @@
 package com.finalproject.kdiary.domain;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.UUID;
 
-@NoArgsConstructor
+@Getter
 @Entity
 @Table(name = "user")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
     @Id
     private String id = UUID.randomUUID().toString();
-    @Column(length = 50)
+    @Email
+    private String email;
+
+    @Column(nullable = false)
     private String name;
 
-    @Column(length = 50)
-    private String email;
+    @Builder
+    public User(String email, String name) {
+        this.email = email;
+        this.name = name;
+    }
+
 }
