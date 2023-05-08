@@ -1,7 +1,7 @@
 package com.finalproject.kdiary.controller.diary;
 
-import com.finalproject.kdiary.controller.diary.dto.request.CreateRequestDto;
-import com.finalproject.kdiary.controller.diary.dto.response.CreateResponseDto;
+import com.finalproject.kdiary.controller.diary.dto.request.DiaryCreateRequestDto;
+import com.finalproject.kdiary.controller.diary.dto.response.DiaryCreateResponseDto;
 import com.finalproject.kdiary.service.DiaryService;
 import com.finalproject.kdiary.support.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class DiaryController {
     private final DiaryService diaryService;
 
     @PostMapping("/diary")
-    public ApiResponse<CreateResponseDto> create(@RequestBody @Valid final CreateRequestDto request) {
+    public ApiResponse<DiaryCreateResponseDto> create(@RequestBody @Valid final DiaryCreateRequestDto request) {
         return ApiResponse.success(diaryService.create(request));
     }
 }

@@ -9,14 +9,14 @@ import java.util.Date;
 @Data
 @Getter
 @RequiredArgsConstructor
-public class CreateResponseDto {
+public class DiaryCreateResponseDto {
     private final Long id;
     private final String content;
     private final Date date;
     private final int writing;
     private final int speaking;
 
-    public static CreateResponseDto of(Long id, String content, Date date, int writing, int speaking) {
-        return new CreateResponseDto(id, content, date, writing, speaking);
+    public static DiaryCreateResponseDto of(Long id, String content, Date date, int writing, int speaking) {
+        return new DiaryCreateResponseDto(id, content, date, writing, speaking);
     }
 }
