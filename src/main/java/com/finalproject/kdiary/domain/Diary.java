@@ -31,12 +31,20 @@ public class Diary {
     @Column(nullable = false)
     private int speaking;
 
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
+
+    @Column(name = "user_id")
+    private String userId;
+
 
     @Builder
-    public Diary(String content, Date date, int writing, int speaking) {
+    public Diary(String content, Date date, int writing, int speaking, String userId) {
         this.content = content;
         this.date = date;
         this.writing = writing;
         this.speaking = speaking;
+        this.userId = userId;
     }
 }

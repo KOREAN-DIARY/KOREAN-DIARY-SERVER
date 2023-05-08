@@ -27,4 +27,8 @@ public class ApiResponse<T> {
     public static <T> ApiResponse<T> success(HttpStatus status, String message) {
         return new ApiResponse<T>(null, status, status.value(), message);
     }
+
+    public static ApiResponse error(ErrorStatus errorStatus) {
+        return new ApiResponse(null, errorStatus.getHttpStatus(), errorStatus.getHttpStatus().value(), errorStatus.getMessage());
+    }
 }

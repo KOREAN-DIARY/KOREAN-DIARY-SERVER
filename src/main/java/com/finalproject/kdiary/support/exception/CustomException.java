@@ -6,6 +6,6 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class CoreException extends RuntimeException {
+public class CustomException extends RuntimeException {
     private final ErrorStatus errorCode;
 }

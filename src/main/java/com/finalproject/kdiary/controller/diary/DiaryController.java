@@ -19,6 +19,8 @@ public class DiaryController {
 
     @PostMapping("/diary")
     public ApiResponse<DiaryCreateResponseDto> create(@RequestBody @Valid final DiaryCreateRequestDto request) {
-        return ApiResponse.success(diaryService.create(request));
+        // TODO: replace user id with real jwt token
+        String userId = "91b6bc99-45f2-4bad-a73c-ba8c8a4010f";
+        return ApiResponse.success(diaryService.create(userId, request));
     }
 }
