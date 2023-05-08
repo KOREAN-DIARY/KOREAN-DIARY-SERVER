@@ -21,7 +21,6 @@ public class SpellController {
     @GetMapping()
     public JSONObject spellCheck() throws ParseException, IOException {
         JSONObject result = spellService.getResult();
-        System.out.println("hi");
 
         return result;
     }
