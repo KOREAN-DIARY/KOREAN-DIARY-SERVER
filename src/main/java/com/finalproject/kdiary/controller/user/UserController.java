@@ -5,6 +5,7 @@ import com.finalproject.kdiary.controller.user.dto.response.UserCreateResponseDt
 import com.finalproject.kdiary.service.UserService;
 import com.finalproject.kdiary.support.response.Response;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +19,7 @@ public class UserController {
 
     @PostMapping("/user")
     public Response<UserCreateResponseDto> create(@RequestBody @Valid final UserCreateRequestDto request) {
-        return Response.success(userService.create(request));
+        return Response.success(userService.create(request), HttpStatus.CREATED);
 
     }
 }
