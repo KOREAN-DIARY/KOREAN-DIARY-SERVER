@@ -44,7 +44,7 @@ public class DiaryService {
 
     @Transactional
     public List<DiaryReadResponseDto> search(String userId) {
-        List<Diary> diaryList = diaryRepository.findByUserId(userId).stream().collect(Collectors.toList());
+        List<Diary> diaryList = diaryRepository.findByUserId(userId);
         List<DiaryReadResponseDto> responseList = new ArrayList<>();
         for (Diary diary : diaryList) {
             responseList.add(
