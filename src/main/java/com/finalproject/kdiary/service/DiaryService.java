@@ -2,6 +2,7 @@ package com.finalproject.kdiary.service;
 
 import com.finalproject.kdiary.controller.diary.dto.request.DiaryCreateRequestDto;
 import com.finalproject.kdiary.controller.diary.dto.response.DiaryCreateResponseDto;
+import com.finalproject.kdiary.controller.diary.dto.response.DiaryReadResponseDto;
 import com.finalproject.kdiary.domain.Diary;
 import com.finalproject.kdiary.infrastructure.DiaryRepository;
 import com.finalproject.kdiary.support.error.ErrorStatus;
@@ -13,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,5 +40,17 @@ public class DiaryService {
         }
         return DiaryCreateResponseDto.of(diary.getId(), diary.getContent(), diary.getDate(), diary.getWriting(), diary.getSpeaking());
 
+    }
+
+    @Transactional
+    public List<DiaryReadResponseDto> search(String userId) {
+        List<Diary> diaryList = diaryRepository.findByUserId(userId).stream().collect(Collectors.toList());
+        List<DiaryReadResponseDto> responseList = new ArrayList<>();
+        for (Diary diary : diaryList) {
+            responseList.add(
+                    DiaryReadResponseDto.from(diary.getId(), diary.getContent(), diary.getDate(), diary.getWriting(), diary.getSpeaking()));
+        }
+
+        return responseList;
     }
 }
