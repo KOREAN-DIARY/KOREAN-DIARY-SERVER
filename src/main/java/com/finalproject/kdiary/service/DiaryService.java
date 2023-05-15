@@ -33,6 +33,11 @@ public class DiaryService {
                 .userId(userId)
                 .build();
 
+        boolean isNewDiary = diaryRepository.findByDate(request.getDate()).isEmpty();
+        if (!isNewDiary) {
+            throw new CustomException(ErrorStatus.BAD_REQUEST);
+        }
+
         try {
             diaryRepository.save(diary);
         } catch (DataIntegrityViolationException e) {
