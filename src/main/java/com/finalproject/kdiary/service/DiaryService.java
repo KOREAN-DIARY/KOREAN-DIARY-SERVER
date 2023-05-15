@@ -8,15 +8,16 @@ import com.finalproject.kdiary.infrastructure.DiaryRepository;
 import com.finalproject.kdiary.support.error.ErrorStatus;
 import com.finalproject.kdiary.support.exception.CustomException;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -33,8 +34,8 @@ public class DiaryService {
                 .userId(userId)
                 .build();
 
-        boolean isNewDiary = diaryRepository.findByDate(request.getDate()).isEmpty();
-        if (!isNewDiary) {
+        Optional<Diary> existDiary = diaryRepository.findByDate(request.getDate());
+        if (existDiary.isPresent()) {
             throw new CustomException(ErrorStatus.BAD_REQUEST);
         }
 
@@ -57,5 +58,18 @@ public class DiaryService {
         }
 
         return responseList;
+    }
+
+    @Transactional
+    public DiaryReadResponseDto getDetailByDate(Date date) {
+        Optional<Diary> optional = diaryRepository.findByDate(date);
+        if (optional.isEmpty()) {
+            throw new CustomException(ErrorStatus.NON_EXIST_DIARY);
+        }
+
+        Diary diary = optional.get();
+
+
+        return DiaryReadResponseDto.from(diary.getId(), diary.getContent(), diary.getDate(), diary.getWriting(), diary.getSpeaking());
     }
 }
