@@ -11,11 +11,11 @@ import java.util.UUID;
 
 @Getter
 @Entity
-@Table(name = "user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
     @Id
-    private String id = UUID.randomUUID().toString();
+    private final String id = UUID.randomUUID().toString();
+
     @Email
     private String email;
 
