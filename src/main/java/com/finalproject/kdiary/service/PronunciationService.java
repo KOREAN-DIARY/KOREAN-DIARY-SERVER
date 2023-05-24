@@ -1,6 +1,10 @@
 package com.finalproject.kdiary.service;
 
+import com.finalproject.kdiary.controller.pronunciation.dto.PronunciationResponseDto;
 import com.google.gson.Gson;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -23,7 +27,7 @@ public class PronunciationService {
     @Value("${api-key}")
     private String accessKey;
 
-    public String test() {
+    public PronunciationResponseDto getPronunciationScore() {
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/PronunciationKor";
         String languageCode = "korean";     // 언어 코드
         String script = "형제 중에서 맏이가 제일 힘든 것 같아요.";    // 평가 대본
@@ -50,8 +54,7 @@ public class PronunciationService {
         request.put("argument", argument);
 
         URL url;
-        Integer responseCode = null;
-        String responBody = null;
+        PronunciationResponseDto response = null;
         try {
             url = new URL(openApiURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -65,21 +68,21 @@ public class PronunciationService {
             wr.flush();
             wr.close();
 
-            responseCode = con.getResponseCode();
             InputStream is = con.getInputStream();
             byte[] buffer = new byte[is.available()];
             int byteRead = is.read(buffer);
-            responBody = new String(buffer);
+            JSONParser parser = new JSONParser();
+            System.out.println(new String(buffer));
+            JSONObject jsonObject = (JSONObject) parser.parse(new String(buffer));
+            JSONObject result = (JSONObject) jsonObject.get("return_object");
 
-            System.out.println("[responseCode] " + responseCode);
-            System.out.println("[responBody]");
-            System.out.println(responBody);
+            response = PronunciationResponseDto.of(result.get("recognized").toString(), Double.parseDouble(result.get("score").toString()));
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
-        return responBody;
+        return response;
     }
 }
