@@ -1,6 +1,8 @@
 package com.finalproject.kdiary.service;
 
 import com.finalproject.kdiary.controller.pronunciation.dto.PronunciationResponseDto;
+import com.finalproject.kdiary.exception.ErrorStatus;
+import com.finalproject.kdiary.exception.model.CustomException;
 import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -79,9 +81,9 @@ public class PronunciationService {
             response = PronunciationResponseDto.of(result.get("recognized").toString(), Double.parseDouble(result.get("score").toString()));
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new CustomException(ErrorStatus.FAIL_TO_CRAWL_PRONUNCIATION_PAGE);
         } catch (ParseException e) {
-            throw new RuntimeException(e);
+            throw new CustomException(ErrorStatus.FAIL_TO_PARSE_PRONUNCIATION_JSON);
         }
         return response;
     }

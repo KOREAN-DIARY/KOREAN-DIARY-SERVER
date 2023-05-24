@@ -19,7 +19,10 @@ public enum ErrorStatus {
     UNEXPECTED_VALUE(HttpStatus.INTERNAL_SERVER_ERROR, "예상하지 못한 값입니다."),
     DELETED_USER(HttpStatus.FORBIDDEN, "삭제된 유저입니다."),
     NON_EXIST_DIARY(HttpStatus.NOT_FOUND, "존재하지 않는 일기입니다."),
-    AWS_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "AWS 에러입니다.");
+    AWS_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "AWS 에러입니다."),
+    FAIL_TO_CRAWL_PRONUNCIATION_PAGE(HttpStatus.INTERNAL_SERVER_ERROR, "발음 평가 페이지 크롤링 실패"),
+    FAIL_TO_PARSE_PRONUNCIATION_JSON(HttpStatus.INTERNAL_SERVER_ERROR, "발음 평가 페이지 결과 JSON parsing 실패"),
+    ;
 
     private final HttpStatus httpStatus;
     private final String message;
