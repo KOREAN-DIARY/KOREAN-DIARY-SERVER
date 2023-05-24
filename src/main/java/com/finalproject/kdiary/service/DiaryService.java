@@ -5,13 +5,12 @@ import com.finalproject.kdiary.controller.diary.dto.response.DiaryCreateResponse
 import com.finalproject.kdiary.controller.diary.dto.response.DiaryReadResponseDto;
 import com.finalproject.kdiary.domain.Diary;
 import com.finalproject.kdiary.infrastructure.DiaryRepository;
-import com.finalproject.kdiary.support.error.ErrorStatus;
-import com.finalproject.kdiary.support.exception.CustomException;
+import com.finalproject.kdiary.exception.ErrorStatus;
+import com.finalproject.kdiary.exception.model.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;

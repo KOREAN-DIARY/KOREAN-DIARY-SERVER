@@ -1,4 +1,4 @@
-package com.finalproject.kdiary.support.error;
+package com.finalproject.kdiary.exception;
 
 import lombok.AccessLevel;
 import lombok.Getter;
