@@ -2,7 +2,7 @@ package com.finalproject.kdiary.controller.pronunciation;
 
 import com.finalproject.kdiary.controller.pronunciation.dto.PronunciationResponseDto;
 import com.finalproject.kdiary.service.PronunciationService;
-import com.finalproject.kdiary.support.response.Response;
+import com.finalproject.kdiary.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,6 +1,6 @@
-package com.finalproject.kdiary.support.response;
+package com.finalproject.kdiary.common.dto;
 
-import com.finalproject.kdiary.support.error.ErrorStatus;
+import com.finalproject.kdiary.exception.ErrorStatus;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

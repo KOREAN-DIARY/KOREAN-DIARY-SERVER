@@ -1,6 +1,6 @@
-package com.finalproject.kdiary.support.exception;
+package com.finalproject.kdiary.exception.model;
 
-import com.finalproject.kdiary.support.error.ErrorStatus;
+import com.finalproject.kdiary.exception.ErrorStatus;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

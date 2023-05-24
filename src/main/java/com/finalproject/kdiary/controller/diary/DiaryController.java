@@ -4,7 +4,7 @@ import com.finalproject.kdiary.controller.diary.dto.request.DiaryCreateRequestDt
 import com.finalproject.kdiary.controller.diary.dto.response.DiaryCreateResponseDto;
 import com.finalproject.kdiary.controller.diary.dto.response.DiaryReadResponseDto;
 import com.finalproject.kdiary.service.DiaryService;
-import com.finalproject.kdiary.support.response.Response;
+import com.finalproject.kdiary.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;

@@ -3,7 +3,7 @@ package com.finalproject.kdiary.controller.user;
 import com.finalproject.kdiary.controller.user.dto.request.UserCreateRequestDto;
 import com.finalproject.kdiary.controller.user.dto.response.UserCreateResponseDto;
 import com.finalproject.kdiary.service.UserService;
-import com.finalproject.kdiary.support.response.Response;
+import com.finalproject.kdiary.common.dto.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
