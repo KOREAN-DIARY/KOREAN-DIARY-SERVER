@@ -1,6 +1,6 @@
 package com.finalproject.kdiary.common.advice;
 
-import com.finalproject.kdiary.common.dto.Response;
+import com.finalproject.kdiary.common.dto.ApiResponse;
 import com.finalproject.kdiary.exception.model.CustomException;
 import com.finalproject.kdiary.exception.ErrorStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 class ControllerExceptionAdvice {
 
     @ExceptionHandler(CustomException.class)
-    protected Response handleCustomException(final CustomException error) {
-        return Response.error(error.getErrorCode());
+    protected ApiResponse handleCustomException(final CustomException error) {
+        return ApiResponse.error(error.getErrorCode());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected Response handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
-        return Response.error(ErrorStatus.BAD_REQUEST);
+    protected ApiResponse handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
+        return ApiResponse.error(ErrorStatus.BAD_REQUEST);
     }
 
 //    @ExceptionHandler(RuntimeException.class)
