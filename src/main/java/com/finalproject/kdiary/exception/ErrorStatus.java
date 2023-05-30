@@ -18,8 +18,18 @@ public enum ErrorStatus {
     ENTITY_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "엔터티를 찾을 수 없습니다."),
     UNEXPECTED_VALUE(HttpStatus.INTERNAL_SERVER_ERROR, "예상하지 못한 값입니다."),
     DELETED_USER(HttpStatus.FORBIDDEN, "삭제된 유저입니다."),
+    AWS_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "AWS 에러입니다."),
+    /**
+     * speaking
+     */
+    FAIL_TO_CRAWL_SPEAKING_PAGE(HttpStatus.INTERNAL_SERVER_ERROR, "발음 평가 페이지 크롤링 실패"),
+    FAIL_TO_PARSE_SPEAKING_JSON(HttpStatus.INTERNAL_SERVER_ERROR, "발음 평가 페이지 결과 JSON parsing 실패"),
+    INVALID_AUDIO_FILE(HttpStatus.BAD_REQUEST, "잘못된 형식의 오디오 파일입니다"),
+    /**
+     * diary
+     */
     NON_EXIST_DIARY(HttpStatus.NOT_FOUND, "존재하지 않는 일기입니다."),
-    AWS_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "AWS 에러입니다.");
+    ;
 
     private final HttpStatus httpStatus;
     private final String message;
