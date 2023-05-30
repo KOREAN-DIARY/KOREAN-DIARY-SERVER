@@ -1,7 +1,7 @@
 package com.finalproject.kdiary.service;
 
-import com.finalproject.kdiary.controller.pronunciation.dto.PronunciationResponseDto;
-import com.finalproject.kdiary.controller.pronunciation.dto.SpeakingScoreRequestDto;
+import com.finalproject.kdiary.controller.speaking.dto.SpeakingResponseDto;
+import com.finalproject.kdiary.controller.speaking.dto.SpeakingRequestDto;
 import com.finalproject.kdiary.exception.ErrorStatus;
 import com.finalproject.kdiary.exception.model.CustomException;
 import com.google.gson.Gson;
@@ -9,7 +9,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,21 +16,17 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class PronunciationService {
+public class SpeakingService {
     @Value("${api-key}")
     private String accessKey;
 
-    public PronunciationResponseDto createSpeakingScore(SpeakingScoreRequestDto scoreRequest) {
+    public SpeakingResponseDto createSpeakingScore(SpeakingRequestDto scoreRequest) {
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/PronunciationKor";
         String languageCode = "korean";     // 언어 코드
         String script = scoreRequest.getScript();    // 평가 대본
@@ -57,7 +52,7 @@ public class PronunciationService {
         request.put("argument", argument);
 
         URL url;
-        PronunciationResponseDto response = null;
+        SpeakingResponseDto response = null;
         try {
             url = new URL(openApiURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -79,12 +74,12 @@ public class PronunciationService {
             JSONObject jsonObject = (JSONObject) parser.parse(new String(buffer));
             JSONObject result = (JSONObject) jsonObject.get("return_object");
 
-            response = PronunciationResponseDto.of(result.get("recognized").toString(), Double.parseDouble(result.get("score").toString()));
+            response = SpeakingResponseDto.of(result.get("recognized").toString(), Double.parseDouble(result.get("score").toString()));
 
         } catch (IOException e) {
-            throw new CustomException(ErrorStatus.FAIL_TO_CRAWL_PRONUNCIATION_PAGE);
+            throw new CustomException(ErrorStatus.FAIL_TO_CRAWL_SPEAKING_PAGE);
         } catch (ParseException e) {
-            throw new CustomException(ErrorStatus.FAIL_TO_PARSE_PRONUNCIATION_JSON);
+            throw new CustomException(ErrorStatus.FAIL_TO_PARSE_SPEAKING_JSON);
         }
         return response;
     }

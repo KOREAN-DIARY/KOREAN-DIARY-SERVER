@@ -25,7 +25,7 @@ public class DiaryController {
     public ApiResponse<DiaryCreateResponseDto> create(@RequestBody @Valid final DiaryCreateRequestDto request) {
         // TODO: replace user id with real jwt token
         String userId = "f127cb54-5c01-4235-9f4c-2ef672786fa7";
-        return ApiResponse.success(SuccessStatus.CREATE_DIARY_SUCCEESS, diaryService.create(userId, request));
+        return ApiResponse.success(SuccessStatus.CREATE_DIARY_SUCCESS, diaryService.create(userId, request));
     }
 
     @GetMapping("/diary")

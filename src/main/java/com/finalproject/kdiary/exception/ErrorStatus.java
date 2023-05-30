@@ -22,8 +22,8 @@ public enum ErrorStatus {
     /**
      * speaking
      */
-    FAIL_TO_CRAWL_PRONUNCIATION_PAGE(HttpStatus.INTERNAL_SERVER_ERROR, "발음 평가 페이지 크롤링 실패"),
-    FAIL_TO_PARSE_PRONUNCIATION_JSON(HttpStatus.INTERNAL_SERVER_ERROR, "발음 평가 페이지 결과 JSON parsing 실패"),
+    FAIL_TO_CRAWL_SPEAKING_PAGE(HttpStatus.INTERNAL_SERVER_ERROR, "발음 평가 페이지 크롤링 실패"),
+    FAIL_TO_PARSE_SPEAKING_JSON(HttpStatus.INTERNAL_SERVER_ERROR, "발음 평가 페이지 결과 JSON parsing 실패"),
     INVALID_AUDIO_FILE(HttpStatus.BAD_REQUEST, "잘못된 형식의 오디오 파일입니다"),
     /**
      * diary

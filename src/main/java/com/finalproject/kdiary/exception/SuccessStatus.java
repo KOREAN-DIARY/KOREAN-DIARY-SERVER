@@ -12,12 +12,11 @@ public enum SuccessStatus {
     /**
      * 발음 api
      */
-    GET_PRONUNCIATION_SUCCESS(HttpStatus.OK, "발음 점수 불러오기 성공"),
     CREATE_SPEAKING_SCORE(HttpStatus.CREATED, "발음 점수 생성 성공"),
     /**
      * diary api
      */
-    CREATE_DIARY_SUCCEESS(HttpStatus.CREATED, "다이어리 생성 성공"),
+    CREATE_DIARY_SUCCESS(HttpStatus.CREATED, "다이어리 생성 성공"),
     GET_DIARY_SUCCESS(HttpStatus.OK, "다이어리 불러오기 성공"),
     GET_DIARY_LIST_SUCCESS(HttpStatus.OK, "다이어리 리스트 불러오기 성공"),
 

@@ -1,4 +1,4 @@
-package com.finalproject.kdiary.controller.pronunciation.dto;
+package com.finalproject.kdiary.controller.speaking.dto;
 
 
 import lombok.AccessLevel;
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-public class SpeakingScoreRequestDto {
+public class SpeakingRequestDto {
     @NotNull
     private MultipartFile audio;
 
