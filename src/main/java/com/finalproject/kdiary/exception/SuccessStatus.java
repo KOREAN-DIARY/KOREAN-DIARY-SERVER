@@ -13,7 +13,7 @@ public enum SuccessStatus {
      * 발음 api
      */
     GET_PRONUNCIATION_SUCCESS(HttpStatus.OK, "발음 점수 불러오기 성공"),
-
+    CREATE_SPEAKING_SCORE(HttpStatus.CREATED, "발음 점수 생성 성공"),
     /**
      * diary api
      */

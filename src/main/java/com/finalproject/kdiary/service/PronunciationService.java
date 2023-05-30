@@ -1,6 +1,7 @@
 package com.finalproject.kdiary.service;
 
 import com.finalproject.kdiary.controller.pronunciation.dto.PronunciationResponseDto;
+import com.finalproject.kdiary.controller.pronunciation.dto.SpeakingScoreRequestDto;
 import com.finalproject.kdiary.exception.ErrorStatus;
 import com.finalproject.kdiary.exception.model.CustomException;
 import com.google.gson.Gson;
@@ -10,6 +11,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -29,11 +31,12 @@ public class PronunciationService {
     @Value("${api-key}")
     private String accessKey;
 
-    public PronunciationResponseDto getPronunciationScore() {
+    public PronunciationResponseDto createSpeakingScore(SpeakingScoreRequestDto scoreRequest) {
         String openApiURL = "http://aiopen.etri.re.kr:8000/WiseASR/PronunciationKor";
         String languageCode = "korean";     // 언어 코드
-        String script = "형제 중에서 맏이가 제일 힘든 것 같아요.";    // 평가 대본
+        String script = scoreRequest.getScript();    // 평가 대본
         String audioContents = null;
+        MultipartFile audioFile = scoreRequest.getAudio();
 
         Gson gson = new Gson();
 
@@ -41,12 +44,10 @@ public class PronunciationService {
         Map<String, String> argument = new HashMap<>();
 
         try {
-            ClassPathResource resource = new ClassPathResource("001_034.pcm");
-            Path path = Paths.get(resource.getURI());
-            byte[] audioBytes = Files.readAllBytes(path);
+            byte[] audioBytes = audioFile.getBytes();
             audioContents = Base64.getEncoder().encodeToString(audioBytes);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new CustomException(ErrorStatus.INVALID_AUDIO_FILE);
         }
 
         argument.put("language_code", languageCode);
