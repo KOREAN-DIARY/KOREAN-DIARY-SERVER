@@ -60,12 +60,13 @@ public class SpellService {
         log.info("++++++++++++++++++++++===================+++++++++++++ selenium : " + driver.getTitle());
 
         driver.findElement(By.xpath("//*[@id='text1']"))
-                .sendKeys("심여를 기우려 만든 마춤뻡 검사기");
+                .sendKeys("심여를 기우려 만든 마춤뻡 검사기. 잘 돼나요?");
         driver.findElement(By.xpath("//*[@id='btnCheck']")).click();
         String text = driver.findElement(By.xpath("/html/head/script[3]"))
                 .getAttribute(("text"));
+        text = text.split("data = ")[1].split(";\n\tpageIdx")[0];
         JSONParser parser = new JSONParser();
-        Object obj = parser.parse(text.split("data = ")[1].split(";")[0]);
+        Object obj = parser.parse(text);
         JSONArray array = (JSONArray) obj;
         JSONObject json = (JSONObject) array.get(0);
 
