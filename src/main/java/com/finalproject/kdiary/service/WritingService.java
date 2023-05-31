@@ -13,14 +13,12 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
-public class SpellService {
-
+public class WritingService {
     private WebDriver driver;
     public static String WEB_DRIVER_ID = "webdriver.chrome.driver"; // Properties 설정
 
@@ -29,7 +27,7 @@ public class SpellService {
         String WEB_DRIVER_PATH = "";
 
         if (os.contains("win")) {
-            ClassPathResource resource  = new ClassPathResource("chromedriver.exe");
+            ClassPathResource resource = new ClassPathResource("chromedriver.exe");
             WEB_DRIVER_PATH = Paths.get(resource.getURI()).toString();
         } else if (os.contains("mac")) {
             ClassPathResource resource = new ClassPathResource("chromedriver");
