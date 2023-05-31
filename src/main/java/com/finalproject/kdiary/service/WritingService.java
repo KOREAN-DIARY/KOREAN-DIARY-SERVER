@@ -1,5 +1,8 @@
 package com.finalproject.kdiary.service;
 
+import com.finalproject.kdiary.controller.writing.dto.ErrorInfoDto;
+import com.finalproject.kdiary.controller.writing.dto.WritingRequestDto;
+import com.finalproject.kdiary.controller.writing.dto.WritingResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -13,14 +16,14 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
-public class SpellService {
-
+public class WritingService {
     private WebDriver driver;
     public static String WEB_DRIVER_ID = "webdriver.chrome.driver"; // Properties 설정
 
@@ -29,7 +32,7 @@ public class SpellService {
         String WEB_DRIVER_PATH = "";
 
         if (os.contains("win")) {
-            ClassPathResource resource  = new ClassPathResource("chromedriver.exe");
+            ClassPathResource resource = new ClassPathResource("chromedriver.exe");
             WEB_DRIVER_PATH = Paths.get(resource.getURI()).toString();
         } else if (os.contains("mac")) {
             ClassPathResource resource = new ClassPathResource("chromedriver");
@@ -51,8 +54,9 @@ public class SpellService {
         driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
     }
 
-    public JSONObject getResult() throws ParseException, IOException {
+    public WritingResponseDto createWritingScore(WritingRequestDto reqeust) throws ParseException, IOException {
         chrome();
+
 
         String url = "http://speller.cs.pusan.ac.kr/";
         driver.get(url);
@@ -60,7 +64,7 @@ public class SpellService {
         log.info("++++++++++++++++++++++===================+++++++++++++ selenium : " + driver.getTitle());
 
         driver.findElement(By.xpath("//*[@id='text1']"))
-                .sendKeys("심여를 기우려 만든 마춤뻡 검사기. 잘 돼나요?");
+                .sendKeys(reqeust.getScript());
         driver.findElement(By.xpath("//*[@id='btnCheck']")).click();
         String text = driver.findElement(By.xpath("/html/head/script[3]"))
                 .getAttribute(("text"));
@@ -69,10 +73,18 @@ public class SpellService {
         Object obj = parser.parse(text);
         JSONArray array = (JSONArray) obj;
         JSONObject json = (JSONObject) array.get(0);
+        JSONArray errorInfoList = (JSONArray) json.get("errInfo");
+        List<ErrorInfoDto> responseErrorInfoList = new ArrayList<>();
+        errorInfoList.forEach(errorJson -> {
+            String help = ((JSONObject) errorJson).get("help").toString();
+            String originalString = (String) ((JSONObject) errorJson).get("orgStr");
+            String correctWord = (String) ((JSONObject) errorJson).get("candWord");
+            responseErrorInfoList.add(new ErrorInfoDto(help, originalString, correctWord));
+        });
 
         quitDriver();
 
-        return json;
+        return WritingResponseDto.of(json.get("str").toString(), responseErrorInfoList);
     }
 
     private void quitDriver() {
