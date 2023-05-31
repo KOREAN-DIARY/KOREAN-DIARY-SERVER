@@ -23,6 +23,6 @@ public class WritingController {
 
     @PostMapping()
     public ApiResponse<WritingResponseDto> createWritingScore(@RequestBody @Valid WritingRequestDto request) throws ParseException, IOException {
-        return ApiResponse.success(SuccessStatus.CREATE_WRITING_SCORE, writingService.createWritingScore());
+        return ApiResponse.success(SuccessStatus.CREATE_WRITING_SCORE, writingService.createWritingScore(request));
     }
 }

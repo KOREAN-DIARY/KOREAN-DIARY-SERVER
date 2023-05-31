@@ -1,6 +1,7 @@
 package com.finalproject.kdiary.service;
 
 import com.finalproject.kdiary.controller.writing.dto.ErrorInfoDto;
+import com.finalproject.kdiary.controller.writing.dto.WritingRequestDto;
 import com.finalproject.kdiary.controller.writing.dto.WritingResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
@@ -53,7 +54,7 @@ public class WritingService {
         driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
     }
 
-    public WritingResponseDto createWritingScore() throws ParseException, IOException {
+    public WritingResponseDto createWritingScore(WritingRequestDto reqeust) throws ParseException, IOException {
         chrome();
 
 
@@ -63,7 +64,7 @@ public class WritingService {
         log.info("++++++++++++++++++++++===================+++++++++++++ selenium : " + driver.getTitle());
 
         driver.findElement(By.xpath("//*[@id='text1']"))
-                .sendKeys("심여를 기우려 만든 마춤뻡 검사기. 잘 돼나요?");
+                .sendKeys(reqeust.getScript());
         driver.findElement(By.xpath("//*[@id='btnCheck']")).click();
         String text = driver.findElement(By.xpath("/html/head/script[3]"))
                 .getAttribute(("text"));
@@ -75,7 +76,7 @@ public class WritingService {
         JSONArray errorInfoList = (JSONArray) json.get("errInfo");
         List<ErrorInfoDto> responseErrorInfoList = new ArrayList<>();
         errorInfoList.forEach(errorJson -> {
-            String help = ((JSONObject) errorJson).get("help").toString().replace("&apos;", "'");
+            String help = ((JSONObject) errorJson).get("help").toString();
             String originalString = (String) ((JSONObject) errorJson).get("orgStr");
             String correctWord = (String) ((JSONObject) errorJson).get("candWord");
             responseErrorInfoList.add(new ErrorInfoDto(help, originalString, correctWord));
