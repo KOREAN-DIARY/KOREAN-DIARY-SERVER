@@ -1,7 +1,10 @@
 package com.finalproject.kdiary.controller.writing;
 
 
+import com.finalproject.kdiary.common.dto.ApiResponse;
 import com.finalproject.kdiary.controller.writing.dto.WritingRequestDto;
+import com.finalproject.kdiary.controller.writing.dto.WritingResponseDto;
+import com.finalproject.kdiary.exception.SuccessStatus;
 import com.finalproject.kdiary.service.WritingService;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
@@ -19,9 +22,7 @@ public class WritingController {
     private final WritingService writingService;
 
     @PostMapping()
-    public JSONObject createWritingScore(@RequestBody @Valid WritingRequestDto request) throws ParseException, IOException {
-        JSONObject result = writingService.getResult();
-
-        return result;
+    public ApiResponse<WritingResponseDto> createWritingScore(@RequestBody @Valid WritingRequestDto request) throws ParseException, IOException {
+        return ApiResponse.success(SuccessStatus.CREATE_WRITING_SCORE, writingService.createWritingScore());
     }
 }

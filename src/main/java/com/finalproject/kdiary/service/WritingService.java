@@ -1,5 +1,7 @@
 package com.finalproject.kdiary.service;
 
+import com.finalproject.kdiary.controller.writing.dto.ErrorInfoDto;
+import com.finalproject.kdiary.controller.writing.dto.WritingResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -49,8 +53,9 @@ public class WritingService {
         driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
     }
 
-    public JSONObject getResult() throws ParseException, IOException {
+    public WritingResponseDto createWritingScore() throws ParseException, IOException {
         chrome();
+
 
         String url = "http://speller.cs.pusan.ac.kr/";
         driver.get(url);
@@ -67,10 +72,18 @@ public class WritingService {
         Object obj = parser.parse(text);
         JSONArray array = (JSONArray) obj;
         JSONObject json = (JSONObject) array.get(0);
+        JSONArray errorInfoList = (JSONArray) json.get("errInfo");
+        List<ErrorInfoDto> responseErrorInfoList = new ArrayList<>();
+        errorInfoList.forEach(errorJson -> {
+            String help = ((JSONObject) errorJson).get("help").toString().replace("&apos;", "'");
+            String originalString = (String) ((JSONObject) errorJson).get("orgStr");
+            String correctWord = (String) ((JSONObject) errorJson).get("candWord");
+            responseErrorInfoList.add(new ErrorInfoDto(help, originalString, correctWord));
+        });
 
         quitDriver();
 
-        return json;
+        return WritingResponseDto.of(json.get("str").toString(), responseErrorInfoList);
     }
 
     private void quitDriver() {
