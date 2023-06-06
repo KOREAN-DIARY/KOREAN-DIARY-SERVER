@@ -70,7 +70,6 @@ public class SpeakingService {
             byte[] buffer = new byte[is.available()];
             int byteRead = is.read(buffer);
             JSONParser parser = new JSONParser();
-            System.out.println(new String(buffer));
             JSONObject jsonObject = (JSONObject) parser.parse(new String(buffer));
             JSONObject result = (JSONObject) jsonObject.get("return_object");
 
