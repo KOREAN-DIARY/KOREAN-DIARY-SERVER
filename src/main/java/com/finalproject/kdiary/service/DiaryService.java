@@ -71,4 +71,17 @@ public class DiaryService {
 
         return DiaryReadResponseDto.from(diary.getId(), diary.getContent(), diary.getDate(), diary.getWriting(), diary.getSpeaking());
     }
+
+    @Transactional
+    public DiaryReadResponseDto getDetail(Long id) {
+        Optional<Diary> optional = diaryRepository.findById(id);
+        if (optional.isEmpty()) {
+            throw new CustomException(ErrorStatus.NON_EXIST_DIARY);
+        }
+
+        Diary diary = optional.get();
+
+
+        return DiaryReadResponseDto.from(diary.getId(), diary.getContent(), diary.getDate(), diary.getWriting(), diary.getSpeaking());
+    }
 }
