@@ -27,6 +27,7 @@ public class DiaryService {
     public DiaryCreateResponseDto create(String userId, DiaryCreateRequestDto request) {
         Diary diary = Diary.builder()
                 .content(request.getContent())
+                .originalContent(request.getOriginalContent())
                 .date(request.getDate())
                 .speaking(request.getSpeaking())
                 .writing(request.getWriting())
@@ -43,7 +44,7 @@ public class DiaryService {
         } catch (DataIntegrityViolationException e) {
             throw new CustomException(ErrorStatus.UNAUTHORIZED);
         }
-        return DiaryCreateResponseDto.of(diary.getId(), diary.getContent(), diary.getDate(), diary.getWriting(), diary.getSpeaking());
+        return DiaryCreateResponseDto.of(diary.getId(), diary.getContent(), diary.getOriginalContent(), diary.getDate(), diary.getWriting(), diary.getSpeaking());
 
     }
 
@@ -53,7 +54,7 @@ public class DiaryService {
         List<DiaryReadResponseDto> responseList = new ArrayList<>();
         for (Diary diary : diaryList) {
             responseList.add(
-                    DiaryReadResponseDto.from(diary.getId(), diary.getContent(), diary.getDate(), diary.getWriting(), diary.getSpeaking()));
+                    DiaryReadResponseDto.from(diary.getId(), diary.getContent(), diary.getOriginalContent(), diary.getDate(), diary.getWriting(), diary.getSpeaking()));
         }
 
         return responseList;
@@ -69,7 +70,7 @@ public class DiaryService {
         Diary diary = optional.get();
 
 
-        return DiaryReadResponseDto.from(diary.getId(), diary.getContent(), diary.getDate(), diary.getWriting(), diary.getSpeaking());
+        return DiaryReadResponseDto.from(diary.getId(), diary.getContent(), diary.getOriginalContent(), diary.getDate(), diary.getWriting(), diary.getSpeaking());
     }
 
     @Transactional
@@ -82,6 +83,6 @@ public class DiaryService {
         Diary diary = optional.get();
 
 
-        return DiaryReadResponseDto.from(diary.getId(), diary.getContent(), diary.getDate(), diary.getWriting(), diary.getSpeaking());
+        return DiaryReadResponseDto.from(diary.getId(), diary.getContent(), diary.getOriginalContent(), diary.getDate(), diary.getWriting(), diary.getSpeaking());
     }
 }
