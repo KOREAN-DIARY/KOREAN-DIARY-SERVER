@@ -10,6 +10,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.core.io.ClassPathResource;
@@ -66,25 +67,32 @@ public class WritingService {
         driver.findElement(By.xpath("//*[@id='text1']"))
                 .sendKeys(reqeust.getScript());
         driver.findElement(By.xpath("//*[@id='btnCheck']")).click();
-        String text = driver.findElement(By.xpath("/html/head/script[3]"))
-                .getAttribute(("text"));
-        text = text.split("data = ")[1].split(";\n\tpageIdx")[0];
-        JSONParser parser = new JSONParser();
-        Object obj = parser.parse(text);
-        JSONArray array = (JSONArray) obj;
-        JSONObject json = (JSONObject) array.get(0);
-        JSONArray errorInfoList = (JSONArray) json.get("errInfo");
         List<ErrorInfoDto> responseErrorInfoList = new ArrayList<>();
-        errorInfoList.forEach(errorJson -> {
-            String help = ((JSONObject) errorJson).get("help").toString();
-            String originalString = (String) ((JSONObject) errorJson).get("orgStr");
-            String correctWord = (String) ((JSONObject) errorJson).get("candWord");
-            responseErrorInfoList.add(new ErrorInfoDto(help, originalString, correctWord));
-        });
+        boolean hasResult = !driver
+                .getPageSource().contains("맞춤법과 문법 오류를 찾지");
+        if (hasResult) {
+            String text = driver
+                    .findElement(By.xpath("/html/head/script[3]"))
+                    .getAttribute(("text"))
+                    .split("data = ")[1].split(";\n\tpageIdx")[0];
+            JSONParser parser = new JSONParser();
+            Object obj = parser.parse(text);
+            JSONArray array = (JSONArray) obj;
+            System.out.println(array);
+            JSONObject json = (JSONObject) array.get(0);
+            JSONArray errorInfoList = (JSONArray) json.get("errInfo");
+            errorInfoList.forEach(errorJson -> {
+                String help = ((JSONObject) errorJson).get("help").toString();
+                String originalString = (String) ((JSONObject) errorJson).get("orgStr");
+                String correctWord = (String) ((JSONObject) errorJson).get("candWord");
+                responseErrorInfoList.add(new ErrorInfoDto(help, originalString, correctWord));
+            });
+        }
+
 
         quitDriver();
 
-        return WritingResponseDto.of(json.get("str").toString(), responseErrorInfoList);
+        return WritingResponseDto.of(reqeust.getScript(), responseErrorInfoList);
     }
 
     private void quitDriver() {
