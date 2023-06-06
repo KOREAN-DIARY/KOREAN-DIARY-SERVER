@@ -24,19 +24,24 @@ public class DiaryController {
     @PostMapping("/diary")
     public ApiResponse<DiaryCreateResponseDto> create(@RequestBody @Valid final DiaryCreateRequestDto request) {
         // TODO: replace user id with real jwt token
-        String userId = "f127cb54-5c01-4235-9f4c-2ef672786fa7";
+        String userId = "7190a79b-5d7e-43f2-b22b-46b2a8b9e6e5";
         return ApiResponse.success(SuccessStatus.CREATE_DIARY_SUCCESS, diaryService.create(userId, request));
     }
 
     @GetMapping("/diary")
     public ApiResponse<List<DiaryReadResponseDto>> search() {
-        String userId = "f127cb54-5c01-4235-9f4c-2ef672786fa7";
+        String userId = "7190a79b-5d7e-43f2-b22b-46b2a8b9e6e5";
         return ApiResponse.success(SuccessStatus.GET_DIARY_LIST_SUCCESS, diaryService.search(userId));
     }
 
     @GetMapping("/diary/search")
     public ApiResponse<DiaryReadResponseDto> getDetailByDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
         return ApiResponse.success(SuccessStatus.GET_DIARY_SUCCESS, diaryService.getDetailByDate(date));
+    }
+
+    @GetMapping("/diary/{diaryId}")
+    public ApiResponse<DiaryReadResponseDto> getDetail(@PathVariable final Long diaryId) {
+        return ApiResponse.success(SuccessStatus.GET_DIARY_SUCCESS, diaryService.getDetail(diaryId));
     }
 
 
