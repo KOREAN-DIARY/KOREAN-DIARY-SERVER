@@ -12,6 +12,8 @@ import javax.validation.constraints.NotNull;
 public class DiaryCreateRequestDto {
     @NotBlank
     private final String content;
+    @NotBlank
+    private final String originalContent;
     @NotNull
     private final Date date;
     @NotNull

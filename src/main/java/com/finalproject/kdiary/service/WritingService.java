@@ -78,7 +78,6 @@ public class WritingService {
             JSONParser parser = new JSONParser();
             Object obj = parser.parse(text);
             JSONArray array = (JSONArray) obj;
-            System.out.println(array);
             JSONObject json = (JSONObject) array.get(0);
             JSONArray errorInfoList = (JSONArray) json.get("errInfo");
             errorInfoList.forEach(errorJson -> {

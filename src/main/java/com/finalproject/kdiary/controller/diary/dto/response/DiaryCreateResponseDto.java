@@ -12,11 +12,12 @@ import java.util.Date;
 public class DiaryCreateResponseDto {
     private final Long id;
     private final String content;
+    private final String originalContent;
     private final Date date;
     private final int writing;
     private final int speaking;
 
-    public static DiaryCreateResponseDto of(Long id, String content, Date date, int writing, int speaking) {
-        return new DiaryCreateResponseDto(id, content, date, writing, speaking);
+    public static DiaryCreateResponseDto of(Long id, String content, String originalContent, Date date, int writing, int speaking) {
+        return new DiaryCreateResponseDto(id, content, originalContent, date, writing, speaking);
     }
 }

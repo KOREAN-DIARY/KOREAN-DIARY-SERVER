@@ -21,6 +21,9 @@ public class Diary {
     @Column(nullable = false, length = 3000)
     private String content;
 
+    @Column(nullable = false, length = 3000)
+    private String originalContent;
+
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
@@ -40,11 +43,13 @@ public class Diary {
 
 
     @Builder
-    public Diary(String content, Date date, int writing, int speaking, String userId) {
+    public Diary(String content, String originalContent, Date date, int writing, int speaking, String userId) {
         this.content = content;
+        this.originalContent = originalContent;
         this.date = date;
         this.writing = writing;
         this.speaking = speaking;
         this.userId = userId;
+
     }
 }

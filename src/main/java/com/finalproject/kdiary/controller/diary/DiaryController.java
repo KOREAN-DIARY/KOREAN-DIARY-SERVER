@@ -24,13 +24,13 @@ public class DiaryController {
     @PostMapping("/diary")
     public ApiResponse<DiaryCreateResponseDto> create(@RequestBody @Valid final DiaryCreateRequestDto request) {
         // TODO: replace user id with real jwt token
-        String userId = "7190a79b-5d7e-43f2-b22b-46b2a8b9e6e5";
+        String userId = "77297777-e408-4a01-b3ca-c93ae0652177";
         return ApiResponse.success(SuccessStatus.CREATE_DIARY_SUCCESS, diaryService.create(userId, request));
     }
 
     @GetMapping("/diary")
     public ApiResponse<List<DiaryReadResponseDto>> search() {
-        String userId = "7190a79b-5d7e-43f2-b22b-46b2a8b9e6e5";
+        String userId = "77297777-e408-4a01-b3ca-c93ae0652177";
         return ApiResponse.success(SuccessStatus.GET_DIARY_LIST_SUCCESS, diaryService.search(userId));
     }
 
