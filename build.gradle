@@ -29,6 +29,7 @@ dependencies {
     implementation 'org.seleniumhq.selenium:selenium-java:4.8.0'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.6.RELEASE'
 }
 
 tasks.named('test') {
