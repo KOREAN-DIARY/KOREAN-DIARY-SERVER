@@ -29,6 +29,7 @@ dependencies {
     implementation 'org.seleniumhq.selenium:selenium-java:4.8.0'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.7'
 }
 
 tasks.named('test') {
