@@ -29,7 +29,10 @@ public enum ErrorStatus {
      * diary
      */
     NON_EXIST_DIARY(HttpStatus.NOT_FOUND, "존재하지 않는 일기입니다."),
-    ;
+    /**
+     * user
+     */
+    TOKEN_TIME_EXPIRED_EXCEPTION(HttpStatus.UNAUTHORIZED, "만료된 토큰입니다");
 
     private final HttpStatus httpStatus;
     private final String message;
