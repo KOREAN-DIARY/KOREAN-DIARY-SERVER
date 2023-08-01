@@ -58,7 +58,7 @@ public class UserService {
         return user.getId();
     }
 
-    public String generateRefreshToken(final Long userId) {
+    public String generateRefreshToken(final String userId) {
         String jwtRefreshToken = jwtService.issueRefreshToken(String.valueOf(userId));
 
         RefreshToken refreshToken = new RefreshToken(jwtRefreshToken, userId);

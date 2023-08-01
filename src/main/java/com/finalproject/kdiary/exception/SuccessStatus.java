@@ -27,6 +27,8 @@ public enum SuccessStatus {
     /**
      * user api
      */
+    LOGIN_SUCCESS(HttpStatus.OK, "로그인 성공"),
+    TOKEN_REFRESH_SUCCESS(HttpStatus.OK, "토큰 리프레시 성공"),
     CREATE_USER_SUCCESS(HttpStatus.CREATED, "유저 생성 성공"),
     ;
 
