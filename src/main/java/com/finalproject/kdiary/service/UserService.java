@@ -70,7 +70,7 @@ public class UserService {
     public String generateAccessToken(final String refreshTokenId) {
         RefreshToken refreshToken = refreshTokenRepository.findById(refreshTokenId)
                 .orElseThrow(() -> new InvalidRefreshTokenException(ErrorStatus.INVALID_REFRESH_TOKEN_EXCEPTION));
-        Long userId = refreshToken.getUserId();
+        String userId = refreshToken.getUserId();
 
 
         return jwtService.issueAccessToken(String.valueOf(userId));
