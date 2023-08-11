@@ -29,6 +29,13 @@ dependencies {
     implementation 'org.seleniumhq.selenium:selenium-java:4.8.0'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.7'
+    //JWT
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {
