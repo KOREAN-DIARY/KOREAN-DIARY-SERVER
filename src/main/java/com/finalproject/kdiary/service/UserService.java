@@ -1,9 +1,7 @@
 package com.finalproject.kdiary.service;
 
 import com.finalproject.kdiary.config.jwt.JwtService;
-import com.finalproject.kdiary.controller.user.dto.request.UserCreateRequestDto;
 import com.finalproject.kdiary.controller.user.dto.request.UserLoginRequestDto;
-import com.finalproject.kdiary.controller.user.dto.response.UserCreateResponseDto;
 import com.finalproject.kdiary.domain.RefreshToken;
 import com.finalproject.kdiary.domain.User;
 import com.finalproject.kdiary.exception.ErrorStatus;
@@ -65,23 +63,31 @@ public class UserService {
         }
     }
 
-    @Transactional
-    public User create(UserCreateRequestDto request) {
-        User user = User.builder()
-                .email(request.getEmail())
-                .name(request.getName())
+    private User getUserInfo(Payload payload) {
+        return User.builder()
+                .id(payload.getSubject())
+                .email(payload.getEmail())
+                .name((String) payload.get("name"))
+                .picture((String) payload.get("picture"))
                 .build();
 
+    }
+
+    @Transactional
+    public User create(User user) {
         return userRepository.save(user);
     }
 
     @Transactional
-    public String login(UserLoginRequestDto request) {
-        Optional<User> user = userRepository.findByEmail(request.getEmail());
+    public String login(UserLoginRequestDto request) throws GeneralSecurityException, IOException {
+        Payload payload = this.verifyToken(request.getIdTokenString());
+
+        this.getUserInfo(payload);
+
+        Optional<User> user = userRepository.findById(payload.getSubject());
         String userId;
         if (user.isEmpty()) {
-            UserCreateRequestDto newUserRequest = new UserCreateRequestDto(request.getEmail(), request.getName());
-            userId = this.create(newUserRequest).getId();
+            userId = this.create(this.getUserInfo(payload)).getId();
         } else {
             userId = user.get().getId();
         }

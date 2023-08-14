@@ -1,10 +1,8 @@
 package com.finalproject.kdiary.controller.user;
 
 import com.finalproject.kdiary.controller.user.dto.request.TokenRefreshRequestDto;
-import com.finalproject.kdiary.controller.user.dto.request.UserCreateRequestDto;
 import com.finalproject.kdiary.controller.user.dto.request.UserLoginRequestDto;
 import com.finalproject.kdiary.controller.user.dto.response.TokenRefreshResponseDto;
-import com.finalproject.kdiary.controller.user.dto.response.UserCreateResponseDto;
 import com.finalproject.kdiary.controller.user.dto.response.UserLoginResponseDto;
 import com.finalproject.kdiary.exception.SuccessStatus;
 import com.finalproject.kdiary.service.UserService;
@@ -17,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +25,7 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public ApiResponse<UserLoginResponseDto> login(@RequestBody @Valid final UserLoginRequestDto request) {
+    public ApiResponse<UserLoginResponseDto> login(@RequestBody @Valid final UserLoginRequestDto request) throws GeneralSecurityException, IOException {
         final String userId = userService.login(request);
         final String refreshToken = userService.generateRefreshToken(userId);
         final String accessToken = userService.generateAccessToken(refreshToken);
