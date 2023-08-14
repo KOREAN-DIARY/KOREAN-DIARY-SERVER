@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -37,25 +38,27 @@ public class UserService {
     }
 
     @Transactional
-    public UserCreateResponseDto create(UserCreateRequestDto request) {
+    public User create(UserCreateRequestDto request) {
         User user = User.builder()
                 .email(request.getEmail())
                 .name(request.getName())
                 .build();
 
-        userRepository.save(user);
-
-        return UserCreateResponseDto.of(user.getId(), user.getEmail(), user.getName());
-
+        return userRepository.save(user);
     }
 
     @Transactional
     public String login(UserLoginRequestDto request) {
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION));
+        Optional<User> user = userRepository.findByEmail(request.getEmail());
+        String userId;
+        if (user.isEmpty()) {
+            UserCreateRequestDto newUserRequest = new UserCreateRequestDto(request.getEmail(), request.getName());
+            userId = this.create(newUserRequest).getId();
+        } else {
+            userId = user.get().getId();
+        }
 
-
-        return user.getId();
+        return userId;
     }
 
     public String generateRefreshToken(final String userId) {

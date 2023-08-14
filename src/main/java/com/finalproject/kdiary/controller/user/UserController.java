@@ -23,12 +23,6 @@ import javax.validation.Valid;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/user")
-    public ApiResponse<UserCreateResponseDto> create(@RequestBody @Valid final UserCreateRequestDto request) {
-        return ApiResponse.success(SuccessStatus.CREATE_USER_SUCCESS, userService.create(request));
-
-    }
-
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public ApiResponse<UserLoginResponseDto> login(@RequestBody @Valid final UserLoginRequestDto request) {
