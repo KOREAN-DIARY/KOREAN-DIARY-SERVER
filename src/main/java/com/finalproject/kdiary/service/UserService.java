@@ -10,13 +10,23 @@ import com.finalproject.kdiary.exception.ErrorStatus;
 import com.finalproject.kdiary.exception.model.*;
 import com.finalproject.kdiary.infrastructure.RefreshTokenRepository;
 import com.finalproject.kdiary.infrastructure.UserRepository;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
 import java.util.Optional;
+
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 
 @Service
 public class UserService {
@@ -24,6 +34,9 @@ public class UserService {
     private static final String SECRET_KEY = "abcdefgabcdefgabcdefgabcdefgabcdefgabcdefg";
     private static final int ACCESS_TOKEN_EXPIRES = 30000;
     private final SecretKey secretKey;
+
+    @Value("${oauth2.google.client-id}")
+    private String googleClientKey;
 
     private final UserRepository userRepository;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -35,6 +48,21 @@ public class UserService {
         this.refreshTokenRepository = refreshTokenRepository;
         this.jwtService = jwtService;
         this.secretKey = Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+    }
+
+
+    private Payload verifyToken(String idTokenString) throws GeneralSecurityException, IOException {
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+                .setAudience(Collections.singletonList(googleClientKey))
+                .build();
+
+
+        GoogleIdToken idToken = verifier.verify(idTokenString);
+        if (idToken != null) {
+            return idToken.getPayload();
+        } else {
+            throw new InvalidGoogleTokenException(ErrorStatus.INVALID_GOOGLE_TOKEN_EXCEPTION);
+        }
     }
 
     @Transactional
@@ -60,6 +88,7 @@ public class UserService {
 
         return userId;
     }
+
 
     public String generateRefreshToken(final String userId) {
         String jwtRefreshToken = jwtService.issueRefreshToken(String.valueOf(userId));

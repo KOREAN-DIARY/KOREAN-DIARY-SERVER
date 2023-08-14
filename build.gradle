@@ -36,6 +36,8 @@ dependencies {
     implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    // google
+    implementation 'com.google.api-client:google-api-client:1.32.1'
 }
 
 tasks.named('test') {
