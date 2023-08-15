@@ -80,13 +80,16 @@ public class UserService {
 
     @Transactional
     public String login(UserLoginRequestDto request) throws GeneralSecurityException, IOException {
-        Payload payload = this.verifyToken(request.getIdTokenString());
+        Payload payload = this.verifyToken(request.getCredential());
+
+        System.out.println("payload" + payload);
 
         this.getUserInfo(payload);
 
         Optional<User> user = userRepository.findById(payload.getSubject());
         String userId;
         if (user.isEmpty()) {
+            System.out.println("Not found user");
             userId = this.create(this.getUserInfo(payload)).getId();
         } else {
             userId = user.get().getId();

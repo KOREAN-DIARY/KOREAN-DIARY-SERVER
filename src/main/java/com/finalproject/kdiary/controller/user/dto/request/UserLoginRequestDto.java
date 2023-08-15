@@ -1,11 +1,11 @@
 package com.finalproject.kdiary.controller.user.dto.request;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 public class UserLoginRequestDto {
-    private final String idTokenString;
+    private String credential;
 }
