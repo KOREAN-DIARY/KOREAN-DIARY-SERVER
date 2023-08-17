@@ -53,7 +53,7 @@ public class JwtService {
         final Claims claims = Jwts.claims()
                 .setSubject(String.valueOf(userId))
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + 30000));
+                .setExpiration(new Date(now.getTime() + 60 * 60 * 24 * 1000));
 
         //private claim 등록
         claims.put("userId", userId);

@@ -1,18 +1,17 @@
 package com.finalproject.kdiary.controller.user;
 
+import com.finalproject.kdiary.config.resolver.UserId;
 import com.finalproject.kdiary.controller.user.dto.request.TokenRefreshRequestDto;
 import com.finalproject.kdiary.controller.user.dto.request.UserLoginRequestDto;
 import com.finalproject.kdiary.controller.user.dto.response.TokenRefreshResponseDto;
+import com.finalproject.kdiary.controller.user.dto.response.UserDetailResponseDto;
 import com.finalproject.kdiary.controller.user.dto.response.UserLoginResponseDto;
 import com.finalproject.kdiary.exception.SuccessStatus;
 import com.finalproject.kdiary.service.UserService;
 import com.finalproject.kdiary.common.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -37,5 +36,11 @@ public class UserController {
     public ApiResponse<TokenRefreshResponseDto> refreshToken(@RequestBody @Valid final TokenRefreshRequestDto request) {
         final String accessToken = userService.generateAccessToken(request.getRefreshToken());
         return ApiResponse.success(SuccessStatus.TOKEN_REFRESH_SUCCESS, TokenRefreshResponseDto.of(accessToken));
+    }
+
+    @GetMapping("/user")
+    @ResponseStatus(HttpStatus.OK)
+    public ApiResponse<UserDetailResponseDto> getUserDetail(@UserId String userId) {
+        return ApiResponse.success(SuccessStatus.GET_USER_DETAIL, userService.getUserDetail(userId));
     }
 }

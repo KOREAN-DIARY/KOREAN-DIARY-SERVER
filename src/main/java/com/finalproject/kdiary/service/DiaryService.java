@@ -34,7 +34,7 @@ public class DiaryService {
                 .userId(userId)
                 .build();
 
-        Optional<Diary> existDiary = diaryRepository.findByDate(request.getDate());
+        Optional<Diary> existDiary = diaryRepository.findByUserIdAndDate(userId, request.getDate());
         if (existDiary.isPresent()) {
             throw new CustomException(ErrorStatus.BAD_REQUEST);
         }
@@ -61,8 +61,8 @@ public class DiaryService {
     }
 
     @Transactional
-    public DiaryReadResponseDto getDetailByDate(Date date) {
-        Optional<Diary> optional = diaryRepository.findByDate(date);
+    public DiaryReadResponseDto getDetailByDate(String userId, Date date) {
+        Optional<Diary> optional = diaryRepository.findByUserIdAndDate(userId, date);
         if (optional.isEmpty()) {
             throw new CustomException(ErrorStatus.NON_EXIST_DIARY);
         }
