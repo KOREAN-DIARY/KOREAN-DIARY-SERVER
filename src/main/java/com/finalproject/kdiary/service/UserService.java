@@ -2,6 +2,7 @@ package com.finalproject.kdiary.service;
 
 import com.finalproject.kdiary.config.jwt.JwtService;
 import com.finalproject.kdiary.controller.user.dto.request.UserLoginRequestDto;
+import com.finalproject.kdiary.controller.user.dto.response.UserDetailResponseDto;
 import com.finalproject.kdiary.domain.RefreshToken;
 import com.finalproject.kdiary.domain.User;
 import com.finalproject.kdiary.exception.ErrorStatus;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -71,6 +73,14 @@ public class UserService {
                 .picture((String) payload.get("picture"))
                 .build();
 
+    }
+
+    @Transactional
+    public UserDetailResponseDto getUserDetail(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new NotFoundException(ErrorStatus.NOT_FOUND_USER_EXCEPTION)
+        );
+        return UserDetailResponseDto.of(user.getId(), user.getEmail(), user.getName(), user.getPicture());
     }
 
     @Transactional
