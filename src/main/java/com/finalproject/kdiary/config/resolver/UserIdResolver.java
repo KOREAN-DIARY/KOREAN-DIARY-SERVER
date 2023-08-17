@@ -20,7 +20,7 @@ public class UserIdResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(UserId.class) && Long.class.equals(parameter.getParameterType());
+        return parameter.hasParameterAnnotation(UserId.class) && String.class.equals(parameter.getParameterType());
     }
 
     @Override
@@ -28,6 +28,7 @@ public class UserIdResolver implements HandlerMethodArgumentResolver {
         final HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         final String token = request.getHeader("Authorization").split(" ")[1];
 
+        System.out.println(token);
         // 토큰 검증
         if (!jwtService.verifyToken(token)) {
             throw new RuntimeException(String.format("USER_ID를 가져오지 못했습니다. (%s - %s)", parameter.getClass(), parameter.getMethod()));
@@ -36,7 +37,7 @@ public class UserIdResolver implements HandlerMethodArgumentResolver {
         // 유저 아이디 반환
         final String tokenContents = jwtService.getJwtContents(token);
         try {
-            return Long.parseLong(tokenContents);
+            return tokenContents;
         } catch (NumberFormatException e) {
             throw new RuntimeException(String.format("USER_ID를 가져오지 못했습니다. (%s - %s)", parameter.getClass(), parameter.getMethod()));
         }
