@@ -1,5 +1,8 @@
 package com.finalproject.kdiary.config.resolver;
 
+import com.finalproject.kdiary.exception.ErrorStatus;
+import com.finalproject.kdiary.exception.model.CustomException;
+import com.finalproject.kdiary.exception.model.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -26,7 +29,12 @@ public class UserIdResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(@NotNull MethodParameter parameter, ModelAndViewContainer modelAndViewContainer, @NotNull NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         final HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        final String token = request.getHeader("Authorization").split(" ")[1];
+        String token;
+        try {
+            token = request.getHeader("Authorization").split(" ")[1];
+        } catch (NullPointerException e) {
+            throw new CustomException(ErrorStatus.NOT_LOGIN);
+        }
 
         System.out.println(token);
         // 토큰 검증
