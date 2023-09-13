@@ -38,13 +38,19 @@ public class WritingService {
         } else if (os.contains("mac")) {
             ClassPathResource resource = new ClassPathResource("chromedriver");
             WEB_DRIVER_PATH = Paths.get(resource.getURI()).toString();
+        } else {
+            ClassPathResource resource = new ClassPathResource("chromedriver-linux");
+            WEB_DRIVER_PATH = Paths.get(resource.getURI()).toString();
         }
+
 
         System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--lang=ko");
         options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--disable-popup-blocking");
+        options.addArguments("--disable-default-apps");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
