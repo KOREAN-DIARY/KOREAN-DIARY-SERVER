@@ -17,6 +17,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping(value = "/writing")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class WritingController {
 
     private final WritingService writingService;

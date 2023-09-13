@@ -19,6 +19,7 @@ import java.security.GeneralSecurityException;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class UserController {
     private final UserService userService;
 
