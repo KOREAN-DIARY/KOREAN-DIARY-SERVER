@@ -37,8 +37,11 @@ public class WritingService {
             WEB_DRIVER_PATH = Paths.get(resource.getURI()).toString();
         } else if (os.contains("mac")) {
             ClassPathResource resource = new ClassPathResource("chromedriver");
+            ClassPathResource resource1 = new ClassPathResource("chromedriver-linux");
+            System.out.println(Paths.get(resource1.getURI()).toString());
             WEB_DRIVER_PATH = Paths.get(resource.getURI()).toString();
         } else {
+            System.out.println("linux");
             ClassPathResource resource = new ClassPathResource("chromedriver-linux");
             WEB_DRIVER_PATH = Paths.get(resource.getURI()).toString();
         }
