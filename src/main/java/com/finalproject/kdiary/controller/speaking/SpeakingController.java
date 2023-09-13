@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/speaking")
+@CrossOrigin(origins = "*")
 public class SpeakingController {
     private final SpeakingService speakingServiceService;
 
