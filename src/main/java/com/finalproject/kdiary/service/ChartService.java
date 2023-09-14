@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -26,11 +25,12 @@ public class ChartService {
         List<ChartScoreDto> speakingScores = new ArrayList<>();
         List<ChartScoreDto> writingScores = new ArrayList<>();
         List<ChartScoreDto> totalScores = new ArrayList<>();
+        ListIterator li = diaryList.toList().listIterator(diaryList.getSize());
 
         /* score data */
         SimpleDateFormat format = new SimpleDateFormat("M/d");
-        for (Diary diary : diaryList) {
-            System.out.println(diary.getSpeaking() + " " + diary.getWriting());
+        while (li.hasPrevious()) {
+            Diary diary = (Diary) li.previous();
             String date = format.format(diary.getDate());
             speakingScores.add(ChartScoreDto.of(date, (double) diary.getSpeaking()));
             writingScores.add(ChartScoreDto.of(date, (double) diary.getWriting()));
