@@ -41,9 +41,9 @@ public class ChartService {
 
         /* chart response data */
         List<ChartDto> chartList = new ArrayList<>();
-        chartList.add(ChartDto.of("말하기", "hsl(102, 70%, 50%)", speakingScores));
-        chartList.add(ChartDto.of("쓰기", "hsl(225, 70%, 50%)", writingScores));
         chartList.add(ChartDto.of("총점", "hsl(152, 70%, 50%)", totalScores));
+        chartList.add(ChartDto.of("쓰기", "hsl(225, 70%, 50%)", writingScores));
+        chartList.add(ChartDto.of("말하기", "hsl(102, 70%, 50%)", speakingScores));
 
         return chartList;
     }
