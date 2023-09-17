@@ -39,8 +39,7 @@ public class WritingService {
             ClassPathResource resource = new ClassPathResource("chromedriver");
             WEB_DRIVER_PATH = Paths.get(resource.getURI()).toString();
         } else {
-            ClassPathResource resource = new ClassPathResource("chromedriver");
-            WEB_DRIVER_PATH = Paths.get(resource.getURI()).toString();
+            WEB_DRIVER_PATH = "/usr/bin/chromedriver";
         }
 
         System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
