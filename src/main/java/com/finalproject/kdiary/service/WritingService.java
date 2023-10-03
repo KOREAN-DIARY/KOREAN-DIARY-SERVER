@@ -61,7 +61,7 @@ public class WritingService {
 
         // weDriver 생성.
         driver = new ChromeDriver(options);
-        driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
     }
 
     public WritingResponseDto createWritingScore(WritingRequestDto reqeust) throws ParseException, IOException {
